@@ -20,6 +20,14 @@ def cost_function(x0):
             value_to_minimize += (C_ges * P[i]) - (v * (C_ges / (E_ges)))
     return -value_to_minimize
 
+def cost_function_simplification(x0):
+    value_to_minimize = 0.0
+    for i in range(0, len(E0)):
+        e = x0[0] * E0[i] + x0[1] * E1[i] + x0[2] * E2[i]
+        v = (0.01 * (x0[0] * E0[i]) + 0.12 * (x0[1] * E1[i]) + 0.35 * (x0[2] * E2[i])) / e
+        value_to_minimize += min(-C[i], e) * (P[i]-np.nan_to_num(v))
+    return -value_to_minimize
+
 if __name__ == '__main__':
   x0 = np.array([0, 0, 0])
 
